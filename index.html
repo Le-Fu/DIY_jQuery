@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test</title>
+	<style>
+		#div1{
+			text-decoration: none;
+			background-color: green;
+		}
+	</style>
+</head>
+<body>
+	<button id="btn">click</button>
+	<div id="div1" class="apple">
+		<p id="p1">saakdjf</p>
+		<p class="aa">asgeer</p>
+		<h1 class="aa">q4y5</h1>
+	</div>
+	<ul id="ul1">
+		<li class="aa">jerijqw</li>
+		<li class="aa">asefew</li>
+		<li class="aa">regtwe</li>
+	</ul>
+	<script src="myLibrary.js"></script>
+	<script>
+		var oBtn = document.getElementById('btn');
+		var oUl = document.getElementById('ul1');
+		var oDiv = document.getElementById('div1');
+		var oP = document.getElementById('p1');
+		
+		addEvent();
+
+		function addEvent(elem, type, handler){
+			var fn = function(){
+				
+			}
+			if(elem.addEventListener){
+				return elem.addEventListener(type, fn, false);
+			}
+		}
+
+
+
+
+
+
+
+
+	</script>
+</body>
+</html>
