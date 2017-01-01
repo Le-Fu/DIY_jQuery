@@ -34,7 +34,7 @@
 	`$('div').children();`	//选择div的所有子元素
 	`$('div').siblings();`	//选择div的同级元素
 ```
- ## 链式操作
+## 链式操作
 
 例如：
 	`$('div').find('h3').eq(2).html('Hello');`
@@ -133,7 +133,7 @@
 
 
 ## 特殊效果
-
+```
 　　.fadeIn() 淡入
 　　.fadeOut() 淡出
 　　.fadeTo() 调整透明度
@@ -143,19 +143,20 @@
 　　.slideUp() 向上卷起
 　　.slideToggle() 依次展开或卷起某个元素
 　　.toggle() 依次展示或隐藏某个元素
-
+```
+```
 	$('div').animate(
-　　　　{
-　　　　　　left : "+=50", //不断右移
-　　　　　　opacity : 0.25 //指定透明度
-　　　　},
-　　　　300, // 持续时间
-　　　　function() { alert('done!'); } //回调函数
-　　);
+	    {
+	      left : "+=50", //不断右移
+	      opacity : 0.25 //指定透明度
+	    },
+	    300, // 持续时间
+	    function() { alert('done!'); } //回调函数
+	 );
 
 	.stop()和.delay()用来停止或延缓特效的执行。
 	$.fx.off如果设置为true，则关闭所有网页特效。
-
+```
 
 
 
