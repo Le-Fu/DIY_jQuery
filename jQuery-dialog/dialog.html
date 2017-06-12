@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="dialog.css">
+</head>
+<body>
+	
+	<button id="btn1">open1</button>
+	<button id="btn2">open2</button>
+
+	
+
+
+
+	<script src="jquery-1.11.3.min.js"></script>
+	<script src="dialog.js"></script>
+	<script>
+		$(function(){
+			$('#btn1').on('click', function(){
+				dialog({
+					title: 'haha',
+					url: 'login.html',
+					width: 500,
+					height: 400,
+					callback: function(){
+						$('#btn-ok').on('click', function(){
+							alert('haha');
+						});
+					}
+				});
+			});
+
+			$('#btn2').on('click', function(){
+				dialog({
+					title: 'haha222',
+					url: 'login.html',
+					width: 300,
+					height: 200
+				});
+			});
+
+			
+		});
+	</script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
