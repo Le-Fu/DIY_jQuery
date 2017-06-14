@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>代码合并</title>
+</head>
+
+<body>
+  $.each(key, val); 可以简化代码
+
+  <script src="https://cdn.bootcss.com/jquery/2.2.2/jquery.js"></script>
+  <script>
+    var Method = {};
+
+    $.each({
+      add: function (a, b) {
+        return a + b;
+      },
+      sub: function (a, b) {
+        return a - b;
+      },
+      mul: function (a, b) {
+        return a * b;
+      }
+    }, function (methodName, fn) {
+      // Method[methodName] = fn;
+      Method[methodName] = function (a, b){
+        return console.log(fn(a, b));
+      };
+    });
+
+
+    Method.add(2, 3);
+    Method.sub(2, 3);
+    Method.mul(2, 3);
+
+  </script>
+</body>
+
+</html>

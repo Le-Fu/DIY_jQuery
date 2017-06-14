@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>domMnip</title>
+</head>
+
+<body>
+  <!--
+    1.保证最终操作的永远是dom元素，浏览器的最终API只认识那么几个接口，所以如果传递是字符串或者其他的，当然需要转换 
+    2.针对节点的大量操作，我们肯定是需要引入文档碎片做优化的，这个必不可少
+    domMnip 主要做了：
+    1.根据用户传入的参数，创建了多个fragment，然后通过回调函数参数传入
+    2.控制script的执行过程，在创建fragment的时候不执行，最后dom操作结束后会统一执行
+  -->
+  <div class="a">
+    <div class="b">
+      <div class="c"></div>
+    </div>
+  </div>
+  <script>
+    // domMnip  需要做如下操作
+    // 1：解析参数，字符串，函数，对象
+    // 2：针对大数据引入文档碎片处理
+    // 3：如果参数中包含script的处理
+    // 1：IE下面innerHTML会忽略没作用域元素,no-scope element(script,link,style,meta,noscript)等，所以这类通过innerHTML创建需要加前缀
+    // 2：innerHTML在IE下面会对字符串进行trimLeft操作，去掉空白
+    // 3: innerHTML不会执行脚本的代码，如果支持defer除外
+    // 4：很多标签不能作为div的子元素、td、tr, tbody等等
+    // 5：jQuery是合集对象，文档碎片的与事件的复制问题
+  </script>
+  <script>
+    var doc = document.querySelector('.c').ownerDocument;
+    console.log(doc);
+  </script>
+</body>
+
+</html>

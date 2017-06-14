@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>遍历</title>
+</head>
+
+<body>
+  <li></li>
+  <li></li>
+  <li id="ha"></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li class="end"></li>
+  <li></li>
+  </ul>
+  <script>
+    /**
+     * @param {element} elem : reference node
+     * @param {String} dir : nextSibling/prevSibling/parentNode...
+     * @param {element} until : 
+     */
+    function traversal(elem, dir, until) {
+      var matched = [],
+        isUntil = until !== undefined;
+      while ((elem = elem[dir]) && elem.nodeType !== 9) {
+        if (elem.nodeType === 1) {
+          if (isUntil && (elem.nodeName.toLowerCase() === until || elem.className === until)) {
+            break;
+          }
+          matched.push(elem);
+        }
+      }
+      return matched;
+    }
+
+    function nextAll(elem, dir) {
+      return traversal(elem, dir)
+    }
+
+    function nextUntil(elem, dir, until) {
+      return traversal(elem, dir, until)
+    }
+
+    var rNode = document.querySelector("#ha");
+    // console.log(rNode);
+    console.log(nextUntil(rNode, 'nextSibling', 'end'));
+  </script>
+</body>
+
+</html>
