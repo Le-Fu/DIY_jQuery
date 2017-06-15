@@ -16,11 +16,18 @@
     1.根据用户传入的参数，创建了多个fragment，然后通过回调函数参数传入
     2.控制script的执行过程，在创建fragment的时候不执行，最后dom操作结束后会统一执行
   -->
-  <div class="a">
+  <!--<div class="a">
     <div class="b">
       <div class="c"></div>
     </div>
-  </div>
+  </div>-->
+  <!--<ul id="oUl">
+    <li class="1">1</li>
+    <li class="2">2</li>
+    <li class="3">3</li>
+    <li class="4">4</li>
+    <li class="5">5</li>
+  </ul>
   <script>
     // domMnip  需要做如下操作
     // 1：解析参数，字符串，函数，对象
@@ -33,8 +40,108 @@
     // 5：jQuery是合集对象，文档碎片的与事件的复制问题
   </script>
   <script>
-    var doc = document.querySelector('.c').ownerDocument;
-    console.log(doc);
+    var oUl = document.querySelector('#oUl');
+    oUl.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (e.target.tagName === 'LI') {
+        // console.log(oUl.firstElementChild);
+        oUl.insertBefore(e.target, oUl.firstElementChild);
+      }
+    }, false);
+  </script>-->
+
+
+  <div id='foo'>Hello</div>
+  <button id="test1">jquery.buildFragment生成文档碎片</button>
+  <button id="test2">模拟jquery.buildFragment生成文档碎片</button>
+
+  <script type="text/javascript">
+    var $newdiv1 = $('<div id="object1"/>'),
+      newdiv2 = document.createElement('div'),
+      existingdiv1 = document.getElementById('foo');
+
+
+    var rxhtmlTag = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/gi;
+    var wrapMap = {
+      // Support: IE 9
+      option: [1, "<select multiple='multiple'>", "</select>"],
+      thead: [1, "<table>", "</table>"],
+      col: [2, "<table><colgroup>", "</colgroup></table>"],
+      tr: [2, "<table><tbody>", "</tbody></table>"],
+      td: [3, "<table><tbody><tr>", "</tr></tbody></table>"],
+      _default: [0, "", ""]
+    };
+    // Support: IE 9
+    wrapMap.optgroup = wrapMap.option;
+    wrapMap.tbody = wrapMap.tfoot = wrapMap.colgroup = wrapMap.caption = wrapMap.thead;
+    wrapMap.th = wrapMap.td;
+
+
+    function buildFragment(elems, context) {
+      var elem, tmp, tag, wrap, contains, j,
+        fragment = context.createDocumentFragment(),
+        nodes = [],
+        i = 0,
+        l = elems.length;
+
+      //筛选出不同类型的节点
+      for (; i < l; i++) {
+        elem = elems[i];
+
+        if (elem || elem === 0) {
+          if (jQuery.type(elem) === "object") {
+            // 如果是jQuery对象
+            // 如果是普通元素对象加[elem]
+            // 取出ele放入nodes数组中
+            jQuery.merge(nodes, elem.nodeType ? [elem] : elem);
+            // 没有html结构，是一个文本节点
+          } else if (!/<|&#?\w+;/.test(elem)) {
+            nodes.push(context.createTextNode(elem));
+          } else {
+            //创一个元素div做为容器
+            tmp = tmp || fragment.appendChild(context.createElement("div"));
+            tag = (/<([\w:]+)/.exec(elem) || ["", ""])[1].toLowerCase();
+            //ie对字符串进行trimLeft操作，其余是用户输入处理
+            //很多标签不能单独作为DIV的子元素
+            //td,th,tr,tfoot,tbody等等,需要加头尾
+            wrap = wrapMap[tag] || wrapMap._default;
+            tmp.innerHTML = wrap[1] + elem.replace(rxhtmlTag, "<$1></$2>") + wrap[2];
+
+            // Descend through wrappers to the right content
+            // 因为warp被包装过
+            // 需要找到正确的元素父级
+            j = wrap[0];
+            while (j--) {
+              tmp = tmp.lastChild;
+            }
+            // Support: QtWebKit
+            // jQuery.merge because push.apply(_, arraylike) throws
+            // 把节点拷贝到nodes数组中去
+            jQuery.merge(nodes, tmp.childNodes);
+          }
+        }
+      }
+      i = 0;
+      while ((elem = nodes[i++])) {
+        fragment.appendChild(elem)
+      }
+      return fragment;
+    }
+
+
+
+    $('#test1').click(function () {
+      "<table><tbody><tr><td>慕课网</td></tr></tbody></table>"
+      $('body').append($newdiv1, [newdiv2, existingdiv1, '<td>慕课网</td>', '文本', '<script>alert(1)'])
+    })
+
+    $('#test2').click(function () {
+      //6中类型的数据结构
+      //这里不设计script的执行
+      var fragment = buildFragment([$newdiv1, newdiv2, existingdiv1, '<td>慕课网</td>', '文本', '<script>alert(1)'], document)
+      document.body.appendChild(fragment)
+    })
+
   </script>
 </body>
 
