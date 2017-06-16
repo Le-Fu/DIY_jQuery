@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>getText</title>
+</head>
+
+<body>
+  <ul>
+    <li class="1">1ha</li>
+    <li class="2">2a</li>
+    <li class="3">3g</li>
+    <li class="4">4h</li>
+    <li class="5">5y</li>
+  </ul>
+  <script>
+    var elem = document.querySelectorAll('li');
+    console.log(getText(elem));
+
+    function getText(elem) {
+      var node,
+        ret = "",
+        i = 0,
+        nodeType = elem.nodeType;
+      if (!nodeType) {
+        //如果没有节点类型,表示是一个数组
+        while (node = elem[i++]) {
+          // 不遍历注释节点
+          ret += getText(node);
+        }
+      } else if (nodeType === 1 || nodeType === 9 || nodeType === 11) {
+        if (typeof elem.textContent === "string") {
+          return elem.textContent;
+        } else {
+          for (elem = elem.firstChild; elem; elem = elem.nextSibling) {
+            ret += getText(elem);
+          }
+        }
+      } else if (nodeType === 3 || nodeType === 4) {
+        return elem.nodeValue;
+      }
+      return ret;
+    }
+  </script>
+</body>
+
+</html>
